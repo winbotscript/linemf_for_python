@@ -7,7 +7,9 @@ This work isn't connect LINEcorp.
 
 This is only for python3.
 # using
-pip install thrift
+```sh
+$ pip install thrift
+```
 # info
 author:mafusuke
 
