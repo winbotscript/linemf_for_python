@@ -15,27 +15,17 @@ class Session:
     def __init__(self, url, headers, path=''):
         self.host = url + path
         self.headers = headers
-
     def Auth(self, isopen=True):
         self.transport = THttpClient.THttpClient(self.host)
         self.transport.setCustomHeaders(self.headers)
-
         self.protocol = TCompactProtocol.TCompactProtocol(self.transport)
         self._auth  = AuthService.Client(self.protocol)
-
-        if isopen:
-            self.transport.open()
-
+        if isopen:self.transport.open()
         return self._auth
-
     def Talk(self, isopen=True):
         self.transport = THttpClient.THttpClient(self.host)
         self.transport.setCustomHeaders(self.headers)
-
         self.protocol = TCompactProtocol.TCompactProtocol(self.transport)
         self._talk  = TalkService.Client(self.protocol)
-
-        if isopen:
-            self.transport.open()
-
+        if isopen:self.transport.open()
         return self._talk
