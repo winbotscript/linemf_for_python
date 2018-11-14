@@ -1,4 +1,4 @@
-# LINEMF
+# LINEMF for python
 This library is protected by license.
 
 /このライブラリはライセンスによって保護されています.
