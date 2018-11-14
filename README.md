@@ -10,6 +10,16 @@ This is only for python3.
 ```sh
 $ pip install thrift
 ```
+
+To login,do as follows.
+
+```python
+mf0=Login("1")#URL
+mf1=Login("2","e-mail","password")#Email
+mf2=Login("3","auth token")#AuthToken
+```
+
+If you want to know more,please check Login.py .
 # info
 author:mafusuke
 
