@@ -12,6 +12,7 @@ import json,re,requests,rsa
 from Session import *
 from Types import LoginRequest
 class Login(object):
+    #setting
     #==Auth==#
     isLogin=False#Auth[bool]
     authToken=""#Auth[string]
@@ -44,22 +45,18 @@ class Login(object):
     Headers={}#Server[dict]
     channelHeaders={}#Server[dict]
     timelineHeaders={}#Server[dict]
+    #method
     def __init__(self,lt,iot=None,pswd=None,cert=None,sn=None,an=None,kl=None):
         self.USER_AGENT="Line/%s"%(self.APP_VER)
         self.APP_NAME="%s\t%s\t%s\t%s"%(self.APP_TYPE,self.APP_VER,self.SYSTEM_NAME,self.SYSTEM_VER)
         self.Headers["User-Agent"]=self.USER_AGENT
         self.Headers["X-Line-Application"]=self.APP_NAME
         self.Headers["X-Line-Carrier"]=self.CARRIER
-        if lt=="1" or lt=="url":
-            self.loginWithQrCode(keepLoggedIn=kl,systemName=sn,appName=an)
-        elif lt=="2" or lt=="mail":
-            self.loginWithCredential(_id=iot,passwd=pswd,certificate=cert,systemName=sn,appName=an,keepLoggedIn=kl)
-        elif lt=="3" or lt=="token":
-            self.loginWithAuthToken(authToken=iot,appName=an)
-        else:
-            raise Exception("ログインタイプが間違っています")
-        if self.isLogin==True:
-            print("LoginSuccess[%s]\n[%s]"%(self.talk.getProfile().displayName,self.talk.getProfile().mid))
+        if lt=="1" or lt=="url":self.loginWithQrCode(keepLoggedIn=kl,systemName=sn,appName=an)
+        elif lt=="2" or lt=="mail":self.loginWithCredential(_id=iot,passwd=pswd,certificate=cert,systemName=sn,appName=an,keepLoggedIn=kl)
+        elif lt=="3" or lt=="token":self.loginWithAuthToken(authToken=iot,appName=an)
+        else:raise Exception("mistaken login type")
+        if self.isLogin==True:print("LoginSuccess[%s]\n[%s]"%(self.talk.getProfile().displayName,self.talk.getProfile().mid))
     def __loginRequest(self,type,data):
         lr=LoginRequest()
         if type=="0":
@@ -88,22 +85,18 @@ class Login(object):
         self.Headers["X-Line-Access"]=appName
         self.tauth=Session(self.LINE_HOST_DOMAIN,self.Headers,self.LINE_AUTH_QUERY_PATH).Talk(isopen=False)
         qrCode=self.tauth.getAuthQrcode(keepLoggedIn,systemName)
-        print("2分以内にこのリンクからログインしてくださいね!\nline://au/q/"+qrCode.verifier)
+        print("Please login by this url.\nline://au/q/"+qrCode.verifier)
         self.Headers["X-Line-Access"]=qrCode.verifier
         getAccessKey=json.loads(self.getSession.get(self.LINE_HOST_DOMAIN+self.LINE_CERTIFICATE_PATH,headers=self.Headers).text)
         self.auth=Session(self.LINE_HOST_DOMAIN,self.Headers,self.LINE_LOGIN_QUERY_PATH).Auth(isopen=False)
         try:
             lr=self.__loginRequest("1",{"keepLoggedIn":keepLoggedIn,"systemName":systemName,"identityProvider":1,"verifier":getAccessKey["result"]["verifier"],"accessLocation":self.IP_ADDR,"e2eeVersion":0})
             result=self.auth.loginZ(lr)
-        except:
-            raise Exception("ログインに失敗しました")
+        except:raise Exception("error")
         if result.type==1:#LoginResultType=1
-            if result.authToken!=None:
-                self.loginWithAuthToken(result.authToken,appName)
-            else:
-                return False
-        else:
-            raise Exception("ログインに失敗しました")
+            if result.authToken!=None:self.loginWithAuthToken(result.authToken,appName)
+            else:return False
+        else:raise Exception("error")
     def loginWithCredential(self,_id,passwd,certificate=None,systemName=None,appName=None,keepLoggedIn=True):
         if systemName==None:systemName=self.SYSTEM_NAME
         if self.EMAIL_REGEX.match(_id):self.provider=1#IdentityProvider.LINE=1
@@ -128,24 +121,21 @@ class Login(object):
         lr=self.__loginRequest("0",{"identityProvider":self.provider,"identifier":rsaKey.keynm,"password":crypto,"keepLoggedIn":keepLoggedIn,"accessLocation":self.IP_ADDR,"systemName":systemName,"certificate":self.certificate,"e2eeVersion":0})
         result=self.auth.loginZ(lr)
         if result.type==3:#LoginRequestType.REQUIRE_DEVICE_CONFIRM=3
-            print("3分以内にこのコードを入力してください\n"+result.pinCode)
+            print("Please input this pincode.\n"+result.pinCode)
             self.Headers["X-Line-Access"]=result.verifier
             getAccessKey=json.loads(self.getSession.get(self.LINE_HOST_DOMAIN+self.LINE_CERTIFICATE_PATH,headers=self.Headers).text)
             self.auth=Session(self.LINE_HOST_DOMAIN,self.Headers,self.LINE_LOGIN_QUERY_PATH).Auth(isopen=False)
             try:
                 lr=self.__loginRequest("1",{"keepLoggedIn":keepLoggedIn,"verifier":getAccessKey["result"]["verifier"],"e2eeVersion":0})
                 result=self.auth.loginZ(lr)
-            except:
-                raise Exception("ログインに失敗しました")
+            except:raise Exception("error")
             if result.type==1:#LoginResultType.SUCCESS==1
                 if result.certificate!=None:
                     with open(_id+".crt","w") as f:
                         f.write(result.certificate)
                     self.certificate=result.certificate
-                if result.authToken!=None:
-                    self.loginWithAuthToken(result.authToken,appName)
-                else:
-                    return False
+                if result.authToken!=None:self.loginWithAuthToken(result.authToken,appName)
+                else:return False
         elif result.type==2:#LoginRequestType.REQUIRE_QRCODE=2
             self.loginWithQrCode(keepLoggedIn,systemName,appName)
             pass
@@ -153,10 +143,8 @@ class Login(object):
             self.certificate=result.certificate
             self.loginWithAuthToken(result.authToken,appName)
     def loginWithAuthToken(self,authToken=None,appName=None):
-        if authToken==None:
-            raise Exception("authTokenを設定してください")
-        if appName==None:
-             appName=self.APP_NAME
+        if authToken==None:raise Exception("Please set authToken")
+        if appName==None:appName=self.APP_NAME
         self.Headers["X-Line-Application"]=appName
         self.Headers["X-Line-access"]=authToken
         self.authToken=authToken
