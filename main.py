@@ -12,24 +12,24 @@ import traceback
 from Login import Login
 #=====================
 #Login
-mf=Login("1")
+mf=Login("1");
 #1:url,2:mail,3:token
 #=====================
 #run
 while True:
     try:
-        ops=cl.poll.fetchOperations(cl.revision,50)
+        ops=mf.poll.fetchOperations(mf.revision,50);
     except:
-        continue
+        continue;
     if ops!=None:
         for op in ops:
             try:
                 if op.type==0:
-                    pass
+                    pass;
             except KeyboardInterrupt:
-                print("[exit]:KeyboardInterrupt")
+                print("[exit]:KeyboardInterrupt");
             else:
-                e=traceback.format_exc()
-                print(str(e))
+                e=traceback.format_exc();
+                print(str(e));
             finally:
-                mf.revision=max(op.revision,mf.revision)
+                mf.revision=max(op.revision,mf.poll.getLastOpRevision());
