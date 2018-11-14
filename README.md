@@ -21,8 +21,8 @@ mf2=Login("3","auth token")#AuthToken
 
 If you want to know more,please check Login.py .
 # info
-author:mafusuke
+author == mafusuke
 
-copyright:Copyright 2018 by mafusuke
+copyright == Copyright 2018 by mafusuke
 
-ver:1.0.0
+version == 1.0.0
