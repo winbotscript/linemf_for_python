@@ -37,6 +37,8 @@ If you want to know more,please check Login.py .
 /さらに知りたい場合はlogin.pyを見てください.
 
 # info
+title == linemf for python
+
 author == mafusuke
 
 author_email == kawa5013@gmail.com
