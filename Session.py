@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 #======================================
 #This library is protected by license.
 #Please check LINCENSE for details.
