@@ -48,12 +48,3 @@ url == https://github.com/mafusuke
 copyright == Copyright 2018 by mafusuke
 
 version == 1.0.0
-
-                 ╭╶╶╶╶╶╮
-                 │  ╭╶╶╯
-  ╭╶╮╭╶╮╭╶╮ ╭╶╶╶╶╯  ╰╶╶╶╶╶╮
-  ╷ ╭╮ ╭╮ ╷ ╷ ╭╶╶╮  ╭╶╶╶╶╶╯
-  │_││_││_╰╶╯_╯  │  │
-                 │  │
-               ╭╶╯  │
-               ╰╶╶╶╶╯
