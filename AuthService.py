@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #======================================
 #This library is protected by license.
 #Please check LINCENSE for details.
-#@file:linemf/AuthService.py
+#@file:linemf/Login.py
 #@author=mafusuke
 #@copyright=Copyright 2018 by mafusuke
 #@license=BSD-3-Clause
 #@version=1.0.0
+#======================================
+#                 ╭╶╶╶╶╶╮
+#                 │  ╭╶╶╯
+#  ╭╶╮╭╶╮╭╶╮ ╭╶╶╶╶╯  ╰╶╶╶╶╶╮
+#  ╷ ╭╮ ╭╮ ╷ ╷ ╭╶╶╮  ╭╶╶╶╶╶╯
+#  │_││_││_╰╶╯_╯  │  │
+#                 │  │
+#               ╭╶╯  │
+#               ╰╶╶╶╶╯
 #======================================
 from thrift.Thrift import TType, TMessageType, TFrozenDict, TException, TApplicationException
 from thrift.protocol.TProtocol import TProtocolException
