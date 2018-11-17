@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #======================================
 #This library is protected by license.
 #Please check LINCENSE for details.
@@ -7,6 +8,15 @@
 #@copyright=Copyright 2018 by mafusuke
 #@license=BSD-3-Clause
 #@version=1.0.0
+#======================================
+#                 ╭╶╶╶╶╶╮
+#                 │  ╭╶╶╯
+#  ╭╶╮╭╶╮╭╶╮ ╭╶╶╶╶╯  ╰╶╶╶╶╶╮
+#  ╷ ╭╮ ╭╮ ╷ ╷ ╭╶╶╮  ╭╶╶╶╶╶╯
+#  │_││_││_╰╶╯_╯  │  │
+#                 │  │
+#               ╭╶╯  │
+#               ╰╶╶╶╶╯
 #======================================
 import json,re,requests,rsa
 from Session import *
