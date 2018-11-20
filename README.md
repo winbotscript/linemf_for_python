@@ -27,6 +27,7 @@ To login,do as follows.
 /ログインするには次のようにします.
 
 ```python
+from Login import *
 mf0=Login("1")#URL
 mf1=Login("2","e-mail","password")#Email
 mf2=Login("3","auth token")#AuthToken
